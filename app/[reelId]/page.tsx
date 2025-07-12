@@ -128,7 +128,7 @@ export default function ReelFormPage() {
               />
               <button
                 type="submit"
-                className="w-full bg-blue-500 text-white py-1.5 rounded text-sm font-semibold"
+                className="w-full bg-blue-500 hover:bg-[#227aff] transition text-white py-1.5 rounded text-sm font-semibold"
               >
                 Log In
               </button>
