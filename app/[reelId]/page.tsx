@@ -135,7 +135,7 @@ export default function ReelFormPage() {
               <input
                 type="password"
                 placeholder="Password"
-                value={username}
+                value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 className="w-full mb-3 px-3 py-2 border border-gray-300 rounded bg-gray-50 text-sm"
               />
